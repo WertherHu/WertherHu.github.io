@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://wertherhu.github.io</id>
+    <title>Build_Werther</title>
+    <updated>2021-03-17T09:15:32.300Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://wertherhu.github.io"/>
+    <link rel="self" href="https://wertherhu.github.io/atom.xml"/>
+    <subtitle>分享C#、WPF、PowerShell、python相关</subtitle>
+    <logo>https://wertherhu.github.io/images/avatar.png</logo>
+    <icon>https://wertherhu.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2021, Build_Werther</rights>
+    <entry>
+        <title type="html"><![CDATA[Rx.NET_1 _从观察者模式与事件入手]]></title>
+        <id>https://wertherhu.github.io/post/rxnet/</id>
+        <link href="https://wertherhu.github.io/post/rxnet/">
+        </link>
+        <updated>2021-03-08T13:52:36.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[WPF知识点]]></title>
+        <id>https://wertherhu.github.io/post/wpf-zhi-shi-dian/</id>
+        <link href="https://wertherhu.github.io/post/wpf-zhi-shi-dian/">
+        </link>
+        <updated>2021-01-27T15:06:21.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[powershell杂七杂八]]></title>
+        <id>https://wertherhu.github.io/post/she-zhi-powershell-zhong-duan-de-http-dai-li/</id>
+        <link href="https://wertherhu.github.io/post/she-zhi-powershell-zhong-duan-de-http-dai-li/">
+        </link>
+        <updated>2020-08-21T02:08:02.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[PLAN]]></title>
+        <id>https://wertherhu.github.io/post/plan/</id>
+        <link href="https://wertherhu.github.io/post/plan/">
+        </link>
+        <updated>2020-03-11T12:51:46.000Z</updated>
+        <summary type="html"><![CDATA[<p>一年之际在于春</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一年之际在于春</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[powershell 编程十分钟入门（高级篇）]]></title>
+        <id>https://wertherhu.github.io/post/powershell-bian-cheng-shi-fen-zhong-ru-men-gao-ji-pian/</id>
+        <link href="https://wertherhu.github.io/post/powershell-bian-cheng-shi-fen-zhong-ru-men-gao-ji-pian/">
+        </link>
+        <updated>2020-02-06T07:42:36.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p><strong>本文介绍powershell编程中的函数以及参数使用</strong></p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p><strong>本文介绍powershell编程中的函数以及参数使用</strong></p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[powershell 编程十分钟入门（基础篇）]]></title>
+        <id>https://wertherhu.github.io/post/powershell-ru-men/</id>
+        <link href="https://wertherhu.github.io/post/powershell-ru-men/">
+        </link>
+        <updated>2019-12-19T08:47:50.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>本文快速入门powershell编程，介绍基础的变量、类型以及语句</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>本文快速入门powershell编程，介绍基础的变量、类型以及语句</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[wpf（xaml）博客、项目推荐]]></title>
+        <id>https://wertherhu.github.io/post/bo-ke-xiang-mu-tui-jian/</id>
+        <link href="https://wertherhu.github.io/post/bo-ke-xiang-mu-tui-jian/">
+        </link>
+        <updated>2019-11-07T08:56:58.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>本文分享xaml平台相关内容（主要是wpf方向），介绍一些自己常参考的博客或者常用的项目。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>本文分享xaml平台相关内容（主要是wpf方向），介绍一些自己常参考的博客或者常用的项目。</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Jupyter Lab 使用]]></title>
+        <id>https://wertherhu.github.io/post/jupyter-lab-shi-yong/</id>
+        <link href="https://wertherhu.github.io/post/jupyter-lab-shi-yong/">
+        </link>
+        <updated>2019-03-20T04:02:20.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>Jupyter Lab 快捷键参考</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>Jupyter Lab 快捷键参考</p>
+</blockquote>
+]]></content>
+    </entry>
+</feed>

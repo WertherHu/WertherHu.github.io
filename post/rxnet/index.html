@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Rx.NET_1 _从观察者模式与事件入手 | Build_Werther</title>
+<meta name="description" content="分享C#、WPF、PowerShell、python相关">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="shortcut icon" href="https://wertherhu.github.io/favicon.ico">
+<link rel="stylesheet" href="https://wertherhu.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wertherhu.github.io">
+        <img src="https://wertherhu.github.io/images/avatar.png" class="site-logo">
+        <h1 class="site-title">Build_Werther</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://wertherhu.github.io/post/guan-yu/" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="site-description">
+      分享C#、WPF、PowerShell、python相关
+    </div>
+    <div class="site-footer">
+      Powered by Hve Notes
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Rx.NET_1 _从观察者模式与事件入手</h2>
+            <div class="post-date">2021-03-08</div>
+            
+            <div class="post-content">
+              <h2 id="1-从观察者模式与事件说起">1.  从观察者模式与事件说起</h2>
+<p>​		对于C#程序员来说，<strong>delegate</strong>与<strong>event</strong>应该是非常熟悉的内容。正是由于<strong>delegate</strong>与<strong>event</strong>的存在，在C#代码中可以非常方便的使用观者模式。比如以下简单的代码示意获取某个类中Data的变化，其中变化由**<code>ChangeDataSomeWay</code>** 引起。</p>
+<pre><code class="language-c#">class ChangedData 
+{
+	public event EventHandler&lt;string&gt; Changed;
+	public string Data{get;private set;}
+	private readonly Random random;
+    
+	public ChangedData()
+	{
+		random=new Random();
+	}
+    
+	public void RaiseChanged() {
+		Changed?.Invoke(this,Data);
+	}
+	
+	public void ChangeDataSomeWay() {
+		Data = $&quot;{random.Next(1, 100)}&quot;;
+		RaiseChanged();
+	}
+}
+</code></pre>
+<p>​		然后在其他类（此处在main中）中进行消费：对**<code>ChangedData</code>** 实例的**<code>Changed</code>** 的事件进行订阅。</p>
+<pre><code class="language-c#">void Main()
+{
+	ChangedData changeData = new ChangedData();
+	changeData.Changed += (sender, args) =&gt; {
+		Console.WriteLine(args);
+	};
+
+	changeData.ChangeDataSomeWay();
+}
+</code></pre>
+<p>​		先来看看Rx.NET中两个重要的接口：<strong><code>IObservable</code></strong> 与**<code>IObserver</code>** ：</p>
+<pre><code class="language-c#">public interface IObservable&lt;T&gt;
+{
+	IDisposable Subscribe(IObserver&lt;T&gt; observer);
+}
+
+
+public interface IObserver&lt;T&gt;
+{
+	void OnCompleted();
+	
+	void OnError(Exception error);
+
+	void OnNext(T value);
+}
+
+</code></pre>
+<p>​		用<strong>IObservable</strong>和<strong>IObserver</strong>实现观察者模式：<strong>IObservable</strong>对照着上文的<strong>ChangedDada</strong>，即发布者，被观察的对象；<strong>IObserver</strong>对应上文的消费程序，即观察者。<strong>IObservable</strong>中通过<strong>subscribe</strong>对<strong>IObserver</strong>保持了引用，然后在某种变化下，进行对<strong>IObserver</strong>的通知。</p>
+<p>​	很多资料对于Reactive编程的内容都是从<strong>IEnumerale</strong>与<strong>IObservable</strong>的对比进行介绍，这还能理解，都是两个变化内容的接口，但是一到<strong>subscribe</strong>的内容，就容易令人犯浑，尤其是有些人在<strong>IObserver</strong>的实例中另外的实现了对<strong>IObservable</strong>的<strong>subscribe</strong> 。</p>
+<p>​	但是只需要记住<strong>IObservable</strong>是被观测的对象，想象成普通代码中拥有event的那些对象即可：把  <strong>IObservable.Subscribe(...)</strong>  与  <strong>x.event+=...</strong> 进行对比。</p>
+<h2 id="2用rxnet实现一个简单的观察者模式例子">2.用Rx.NET实现一个简单的观察者模式例子</h2>
+<pre><code class="language-c#">//实现IObservable接口
+class MyObservableData : IObservable&lt;int&gt;
+{
+	List&lt;IObserver&lt;int&gt;&gt; observers;
+
+	public MyObservableData()
+	{
+		observers = new List&lt;System.IObserver&lt;int&gt;&gt;();
+	}
+	public IDisposable Subscribe(IObserver&lt;int&gt; observer)
+	{
+		if (!observers.Contains(observer))   observers.Add(observer);
+		return new Unsubscriber(observers, observer);
+	}
+
+
+	//定义一个IDisposable的实现类
+	private class Unsubscriber : IDisposable
+	{
+		private List&lt;IObserver&lt;int&gt;&gt; observers;
+		private IObserver&lt;int&gt; observer;
+
+		public Unsubscriber(List&lt;IObserver&lt;int&gt;&gt; observers, IObserver&lt;int&gt; observer)
+		{
+			this.observers = observers;
+			this.observer = observer;
+		}
+
+		public void Dispose()
+		{
+			if (observer != null)   observers.Remove(observer);
+		}
+	}
+
+	//此处手动触发IObserver的OnNext
+	public void NotifyOnNext()
+	{
+		foreach (var observer in observers)
+		{
+			observer.OnNext(2333);
+		}
+	}
+
+	//此处手动触发IObserver的OnError
+	public void NotifyOnError()
+	{
+		foreach (var observer in observers)
+		{
+			observer.OnError(new Exception(&quot;error!!!&quot;));
+		}
+
+	}
+
+//此处手动触发IObserver的OnCompleted
+	public void NotifyOnCompleted()
+	{
+		foreach (var observer in observers)
+		{
+			observer.OnCompleted();
+		}
+	}
+
+}
+</code></pre>
+<p>​		看代码应该很好理解：在类<strong>MyObservableData</strong>中实现了<strong>IObservable</strong>接口的<strong>Subscribe</strong>的方法，因为可能会进行不止一个的<strong>Subscribe</strong>，所以定义了一个列表<strong>observers</strong>来存放所有的<strong>observer</strong>。为了在外部调用<strong>IDisposable</strong>的对象，能使得列表<strong>observers</strong>正确的移除，所以定义了内部类<strong>Unsubscriber</strong>。</p>
+<p>​		看一看<strong>IObserver</strong>的实现。有些资料中会在<strong>IObserver</strong>中定义<strong>Subscribe</strong>和<strong>Unsubscribe</strong>方法，比如 <a href="https://docs.microsoft.com/en-us/dotnet/standard/events/how-to-implement-an-observer">How to: Implement an Observer</a></p>
+<pre><code class="language-C#">class MyObserver : IObserver&lt;int&gt;
+{
+	private IDisposable unsubscriber;
+	public void OnCompleted()
+	{
+		Console.WriteLine(&quot;OnCompleted @MyObserver&quot;);
+	}
+
+	public void OnError(Exception error)
+	{
+		Console.WriteLine($&quot;OnError @MyObserver with error: {error.Message}&quot;);
+	}
+
+	public void OnNext(int value)
+	{
+		Console.WriteLine($&quot;OnNext @MyObserver with value: {value}&quot;);
+	}
+
+	#region 有些资料中会在IObserver中定义Subscribe和Unsubscribe方法
+	public void Subscribe(IObservable&lt;int&gt; observable)
+	{
+		unsubscriber = observable.Subscribe(this);
+	}
+
+	public void Unsubscribe()
+	{
+		if (unsubscriber != null) unsubscriber.Dispose();
+	}
+	#endregion
+}
+</code></pre>
+<p>​		在调用处进行使用：</p>
+<pre><code class="language-C#">MyObservableData changedData = new MyObservableData();
+MyObserver observer1 = new MyObserver();
+
+var unsubscriber= changedData.Subscribe(observer1);
+
+changedData.NotifyOnNext();
+changedData.NotifyOnError();
+changedData.NotifyOnCompleted();
+
+unsubscriber.Dispose();
+</code></pre>
+<p>​		或者在<strong>observer1</strong>上进行<strong>Subscribe</strong>和<strong>Unsubscribe</strong>：</p>
+<pre><code class="language-c#">MyObservableData changedData = new MyObservableData();
+MyObserver observer1 = new MyObserver();
+
+observer1.Subscribe(changedData);
+	
+changedData.NotifyOnNext();
+changedData.NotifyOnError();
+changedData.NotifyOnCompleted();
+	
+observer1.Unsubscribe();
+</code></pre>
+<h2 id="资料">资料</h2>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/standard/events/how-to-implement-an-observer">How to: Implement an Observer</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/standard/events/how-to-implement-a-provider">How to: Implement a Provider</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern">Observer Design Pattern</a></li>
+<li><a href="http://introtorx.com/Content/v1.0.10621.0/01_WhyRx.html">Why Rx?</a></li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://wertherhu.github.io/tag/02EFWYYXo/" class="tag">
+                    Rx
+                  </a>
+                
+                  <a href="https://wertherhu.github.io/tag/OuBwh57JP/" class="tag">
+                    C#
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://wertherhu.github.io/post/wpf-zhi-shi-dian/">
+                  <h3 class="post-title">
+                    WPF知识点
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '791f423ff25866386842',
+        clientSecret: '4715227d40d2e9a8d975548e7318a35f935a196d',
+        repo: 'wertherhu.github.io',
+        owner: 'WertherHu',
+        admin: ['WertherHu'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

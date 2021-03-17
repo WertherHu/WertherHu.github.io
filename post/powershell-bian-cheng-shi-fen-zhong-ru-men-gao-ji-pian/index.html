@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>powershell 编程十分钟入门（高级篇） | Build_Werther</title>
+<meta name="description" content="分享C#、WPF、PowerShell、python相关">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="shortcut icon" href="https://wertherhu.github.io/favicon.ico">
+<link rel="stylesheet" href="https://wertherhu.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wertherhu.github.io">
+        <img src="https://wertherhu.github.io/images/avatar.png" class="site-logo">
+        <h1 class="site-title">Build_Werther</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://wertherhu.github.io/post/guan-yu/" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="site-description">
+      分享C#、WPF、PowerShell、python相关
+    </div>
+    <div class="site-footer">
+      Powered by Hve Notes
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">powershell 编程十分钟入门（高级篇）</h2>
+            <div class="post-date">2020-02-06</div>
+            
+            <div class="post-content">
+              <blockquote>
+<p><strong>本文介绍powershell编程中的函数以及参数使用</strong></p>
+</blockquote>
+<!-- more -->
+<h2 id="function-写法"><strong>function 写法</strong></h2>
+<p><img src="https://wertherhu.github.io/post-images/1607433637192.png" alt="" loading="lazy"><br>
+在vs code中编写powershell脚本时，可以看到这三种function snippet形式。</p>
+<ul>
+<li>function-inline</li>
+</ul>
+<pre><code class="language-powershell">function FunctionName (OptionalParameters) {
+}
+</code></pre>
+<ul>
+<li>function</li>
+</ul>
+<pre><code class="language-powershell"> function FunctionName {
+ param (
+   OptionalParameters
+ )
+}
+</code></pre>
+<ul>
+<li>function-advanced</li>
+</ul>
+<pre><code class="language-powershell">function Verb-Noun {
+  [CmdletBinding()]
+  param (
+  )
+  
+  begin {
+  }
+  
+  process {
+  }
+  
+  end {
+  }
+}
+</code></pre>
+<h2 id="parameters-和-validates"><strong>parameters 和 validates</strong></h2>
+<p>变量<code>$args</code><strong>不适用</strong>于为命名的参数，这点需要注意，当有命名参数时，<code>$args</code>就将其排除在外。不过powershell一般不推荐使用$args来操作参数。</p>
+<p>完整的参数snippet：</p>
+<pre><code class="language-powershell">#注释
+[Parameter(Mandatory=$true,#必选参数
+           Position=0,#位置参数
+           ParameterSetName=&quot;SetName&quot;,#参数集
+           ValueFromPipelineByPropertyName=$true,#是否允许从管道中获取，并且根据属性名自动匹配
+           HelpMessage=&quot;Help Message&quot;)]#帮助信息
+[Alias(&quot;aliasName&quot;)]#别名
+[ValidateNotNullOrEmpty()]#输入验证
+[SupportsWildcards()]#是否支持通配符
+[string[]]#类型
+$ParameterName#参数名
+
+</code></pre>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>param()</code></td>
+<td>如果在ps1脚本中 param关键字需要在第一行</td>
+</tr>
+<tr>
+<td><code>[int]</code></td>
+<td>设置类型，powershell会对参数进行转换</td>
+</tr>
+<tr>
+<td><code>$defaultParam=&quot;this has default value&quot;</code></td>
+<td>设置参数的默认值</td>
+</tr>
+<tr>
+<td><code>[Parameter(Position=0)]</code></td>
+<td>位置参数，不根据参数名，根据位置获取参数的值</td>
+</tr>
+<tr>
+<td><code>[Parameter(Mandatory=$True)]</code></td>
+<td>强制参数，该参数必须设置值，即使有默认值也要重新设置  $True可省略</td>
+</tr>
+<tr>
+<td><code>[Parameter(ParameterSetName=&quot;name&quot;)]</code></td>
+<td>参数分组，不同参数如果在不同分组不能一起出现，同一个参数可以在多个分组。未设置该特性的都为共同参数</td>
+</tr>
+<tr>
+<td><code>[Parameter(HelpMessage=&quot;help message&quot;)]</code></td>
+<td>帮助信息</td>
+</tr>
+<tr>
+<td><code>[Parameter(ValueFromPipeline=$true)]</code></td>
+<td>管道传值 by value。$True可省略</td>
+</tr>
+<tr>
+<td><code>[Parameter(ValueFromPipelineByPropertyName=$true)]</code></td>
+<td>管道传值 by property name。$True可省略</td>
+</tr>
+<tr>
+<td><code>[ValidateSet(&quot;enum1&quot;,&quot;enum2&quot;,&quot;enum3&quot;)]</code></td>
+<td>验证参数，只允许选这几个值</td>
+</tr>
+<tr>
+<td><code>[ValidateRange(srart,end)]</code></td>
+<td>验证参数，范围</td>
+</tr>
+<tr>
+<td><code>[ValidateLength(4,8)]</code></td>
+<td>验证参数，长度</td>
+</tr>
+<tr>
+<td><code>[ValidatePattern(&quot;[2][9][0-9][0-9[[0-9]&quot;)]</code></td>
+<td>验证参数，正则匹配</td>
+</tr>
+<tr>
+<td><code>[ValidateScript({$_ -ge (Get-Date)})]</code></td>
+<td>可自定义脚本</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<h2 id="begin-process-end-是啥"><strong>begin{} process{} end{} 是啥？</strong></h2>
+<blockquote>
+<h1 id="参考">参考</h1>
+</blockquote>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_advanced_parameters?view=powershell-5.1">About Functions Advanced Parameters --msdn doc</a></li>
+<li><a href="https://www.red-gate.com/simple-talk/sysadmin/powershell/how-to-use-parameters-in-powershell/">How to Use Parameters in PowerShell Part I</a></li>
+<li><a href="https://www.red-gate.com/simple-talk/sysadmin/powershell/how-to-use-parameters-in-powershell-part-ii/">How to Use Parameters in PowerShell Part II</a></li>
+<li><a href="https://blog.51cto.com/38088444/1920811">[PowerShell-自定义函数(三)-强制参数:Mandatory]</a></li>
+<li><a href="https://blog.51cto.com/38088444/1920896">[PowerShell-自定义函数(四)-位置参数:Position]</a></li>
+<li><a href="https://blog.51cto.com/38088444/1920978">[PowerShell-自定义函数(五)-参数互斥:ParameterSetName]</a></li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://wertherhu.github.io/tag/YR8jOHkOx/" class="tag">
+                    powershell
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://wertherhu.github.io/post/powershell-ru-men/">
+                  <h3 class="post-title">
+                    powershell 编程十分钟入门（基础篇）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '791f423ff25866386842',
+        clientSecret: '4715227d40d2e9a8d975548e7318a35f935a196d',
+        repo: 'wertherhu.github.io',
+        owner: 'WertherHu',
+        admin: ['WertherHu'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

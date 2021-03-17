@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>powershell 编程十分钟入门（基础篇） | Build_Werther</title>
+<meta name="description" content="分享C#、WPF、PowerShell、python相关">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="shortcut icon" href="https://wertherhu.github.io/favicon.ico">
+<link rel="stylesheet" href="https://wertherhu.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wertherhu.github.io">
+        <img src="https://wertherhu.github.io/images/avatar.png" class="site-logo">
+        <h1 class="site-title">Build_Werther</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://wertherhu.github.io/post/guan-yu/" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="site-description">
+      分享C#、WPF、PowerShell、python相关
+    </div>
+    <div class="site-footer">
+      Powered by Hve Notes
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">powershell 编程十分钟入门（基础篇）</h2>
+            <div class="post-date">2019-12-19</div>
+            
+            <div class="post-content">
+              <blockquote>
+<p>本文快速入门powershell编程，介绍基础的变量、类型以及语句</p>
+</blockquote>
+<!-- more -->
+<h2 id="变量">变量</h2>
+<p>“$&quot;开始，数字、字母、下划线的任意字符，大小写不敏感，（如何包含空格 :  ${s  a  d}）</p>
+<ul>
+<li>几个常用变量：</li>
+</ul>
+<pre><code class="language-powershell">$$ #包含会话所收到的最后一行中的最后一个令牌。
+$? #包含最后一个操作的执行状态。如果最后一个操作成功，则包含 TRUE，失败则包含 FALSE。
+$^ #包含会话所收到的最后一行中的第一个令牌。
+$_ #包含管道对象中的当前对象。在对管道中的每个对象或所选对象执行操作的命令中，可以使用此变量。
+$Error #包含错误对象的数组，这些对象表示最近的一些错误。
+
+</code></pre>
+<h2 id="类型">类型</h2>
+<p>与.net数据类型类似</p>
+<pre><code class="language-powershell">[int]$a=1 #int
+$a -is [int] #True
+</code></pre>
+<h2 id="注释">注释</h2>
+<pre><code class="language-powershell">#注释
+
+&lt;#
+多
+行
+注释
+#&gt;
+</code></pre>
+<h2 id="字符串">字符串</h2>
+<pre><code class="language-powershell">#多行字符串  起始行[@&quot;] ，结束行 [&quot;@]，必须分开在不同行
+$multiLines=@&quot;
+line1,
+line2
+line3
+&quot;@
+#转义 使用`
+$word=&quot;`&quot;&quot;
+
+# 单引号 与双引号的区别：双引号里遇到$,会自动替换变量
+$a=&quot;hello&quot;  #'hello'此处单引号也可以
+&quot;111  $a &quot; #111 hello
+'111 $a' #111 $a
+
+
+</code></pre>
+<h3 id="字符串打印">字符串打印</h3>
+<pre><code class="language-powershell"># 会自动识别$变量 ，语句用$()子语句表示
+$1=&quot;hi&quot;
+$2=&quot;world&quot;
+
+Write-Host &quot;$($1) - $2&quot;
+#格式化或者用.net 的string.Format()，亦可以用双引号加$的用法
+Write-Host (&quot;{0},,,,,{1}&quot; -f $1,$2)
+
+</code></pre>
+<h2 id="数据结构">数据结构</h2>
+<ol>
+<li>Array   <code>@()</code></li>
+</ol>
+<pre><code class="language-powershell">$array=1,2,3,4,5
+$range=1..5
+$emptyArray=@()
+$oneArray=,1 # or   @(1)  or @(,1)
+[int[]]$intArray=1,2,3,4,5
+
+#取值
+$array[0]
+$arrar[2..1] #开始的位置到结束的位置，位置递增或者递减
+</code></pre>
+<p>思考下列取值</p>
+<pre><code class="language-powershell">$array=0,1,2,3,4,5,6
+$array[..5] #错误，❌
+$array[3..] #错误，❌
+$array[0,1+3..5]
+$array[1..-2]
+$array[-2..1]
+</code></pre>
+<ol>
+<li>HashTable  <code>@{}</code></li>
+</ol>
+<pre><code class="language-powershell">$hashTable=@{a=0;b=&quot;sd&quot;;&quot;23-wew&quot;=33}
+$hasnTable.a
+$hashTable.[&quot;23-wew&quot;]
+$hashTable.&quot;23-wew&quot; #or $hashTable.'23-wew'
+
+</code></pre>
+<h2 id="控制流程">控制流程</h2>
+<ul>
+<li><strong>if</strong><br>
+基本格式如下：</li>
+</ul>
+<pre><code>if (condition) {statement} 
+[elseif (condition) {statement} ..]
+[else {statement}]
+</code></pre>
+<pre><code class="language-powershell">$num=1
+if($num -lt 0){
+    Write-Host &quot;&lt; 0&quot;
+}
+elseif ($num -eq 0) {
+    Write-Host &quot;= 0&quot;
+}
+else {
+    Write-Host &quot;&gt; 0&quot;    
+}
+</code></pre>
+<ul>
+<li><strong>switch</strong><br>
+基本格式如下：</li>
+</ul>
+<pre><code>switch [-regex|-wildcard|-exact] [-casesensitive] (item)
+{
+    {condition} {statement}
+    ..
+    [default {statement}]
+}
+</code></pre>
+<p><strong>switch关键字后面可以加上可选的参数：</strong><br>
+<strong>-regex</strong>代表接受正则表达式对字符串进行匹配。<br>
+<strong>-wildcard</strong>代表接受通配符对字符串进行匹配。支持?、*、[a-z]等形式的通配符。<br>
+<strong>-exact</strong>代表精确匹配，使用精确匹配的话switch语句就不会识别字符串中的通配符和正则表达式。<br>
+<strong>-casesensitive</strong>代表大小写敏感，加上该参数的时候switch默认使用-ceq而不是-ieq。<br>
+如果碰到匹配条件时只处理一次，可以使用<strong>Break</strong>关键字<br>
+Switch支持对集合<strong>所有元素</strong>进行匹配</p>
+<pre><code class="language-powershell">$num=0
+switch ($num) {
+    {($_ -gt 0)}{Write-Host &quot;gt 0&quot;}
+     0 {Write-Host &quot;eq 0&quot;      } #缺省为 -eq
+    Default {Write-Host &quot;not eq 0&quot; }
+}
+</code></pre>
+<ul>
+<li>
+<p><strong>while</strong><br>
+基本格式如下<code>while (condition) {statement}</code><br>
+do..while和do..until..先执行一次循环体，再判断循环条件是否成立。<br>
+基本结构为<code>do {statement} while|until (condition)</code>。<br>
+区别是do..while..在条件成立的时候继续循环，而do..until..在条件成立的时候退出循环</p>
+</li>
+<li>
+<p><strong>foreach</strong><br>
+语句格式<code>foreach ($item in collection) {statement}</code></p>
+</li>
+<li>
+<p><strong>for</strong><br>
+语句格式<code>for (init; condition; increment) {statement}</code></p>
+</li>
+<li>
+<p><strong>continue和break</strong><br>
+continue和break 跟其他编程语言类似 continue语句的作用是跳过当前循环进入下一次循环，break语句则跳出整个循环结构</p>
+</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://wertherhu.github.io/tag/YR8jOHkOx/" class="tag">
+                    powershell
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://wertherhu.github.io/post/bo-ke-xiang-mu-tui-jian/">
+                  <h3 class="post-title">
+                    wpf（xaml）博客、项目推荐
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '791f423ff25866386842',
+        clientSecret: '4715227d40d2e9a8d975548e7318a35f935a196d',
+        repo: 'wertherhu.github.io',
+        owner: 'WertherHu',
+        admin: ['WertherHu'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

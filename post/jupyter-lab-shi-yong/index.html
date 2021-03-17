@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Jupyter Lab 使用 | Build_Werther</title>
+<meta name="description" content="分享C#、WPF、PowerShell、python相关">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="shortcut icon" href="https://wertherhu.github.io/favicon.ico">
+<link rel="stylesheet" href="https://wertherhu.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wertherhu.github.io">
+        <img src="https://wertherhu.github.io/images/avatar.png" class="site-logo">
+        <h1 class="site-title">Build_Werther</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://wertherhu.github.io/post/guan-yu/" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="site-description">
+      分享C#、WPF、PowerShell、python相关
+    </div>
+    <div class="site-footer">
+      Powered by Hve Notes
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Jupyter Lab 使用</h2>
+            <div class="post-date">2019-03-20</div>
+            
+            <div class="post-content">
+              <blockquote>
+<p>Jupyter Lab 快捷键参考</p>
+</blockquote>
+<!-- more -->
+<h1 id="jupyter-lab-使用"><strong>Jupyter Lab 使用</strong></h1>
+<ul>
+<li>启动：jupyter lab</li>
+<li>edit mode： Enter</li>
+<li>command mode ：Esc</li>
+</ul>
+<h2 id="command-mode-中使用的快捷键">command mode 中使用的快捷键</h2>
+<ul>
+<li>运行选中的cell： Shift + Enter</li>
+<li>删除选中的cell： d，d</li>
+<li>在当前cell的下方新建cell： b</li>
+<li>在当前cell的上方新建cell：a</li>
+<li>合并cell：Shift + m</li>
+<li>当前cell内容格式切换：<br>
+y-》code<br>
+m-》markdown</li>
+</ul>
+<p>其他快捷键参考jupyter notebook</p>
+<h2 id="home目录修改">home目录修改</h2>
+<p>修改Anaconda目录下的/etc/jupyter/jupyter_notebook_config.json<br>
+虚拟环境：envs/虚拟环境名称/etc/jupyter/</p>
+<p>添加如下内容：<br>
+<strong>&quot;notebook_dir&quot;:&quot;要指向的目录&quot;</strong></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://wertherhu.github.io/tag/1r2Q4Fg1n/" class="tag">
+                    python
+                  </a>
+                
+                  <a href="https://wertherhu.github.io/tag/kAAt-vdr0/" class="tag">
+                    jupyter
+                  </a>
+                
+              </div>
+            
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '791f423ff25866386842',
+        clientSecret: '4715227d40d2e9a8d975548e7318a35f935a196d',
+        repo: 'wertherhu.github.io',
+        owner: 'WertherHu',
+        admin: ['WertherHu'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

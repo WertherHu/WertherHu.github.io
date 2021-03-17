@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>文章归档 | Build_Werther</title>
+<meta name="description" content="分享C#、WPF、PowerShell、python相关">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="shortcut icon" href="https://wertherhu.github.io/favicon.ico">
+<link rel="stylesheet" href="https://wertherhu.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wertherhu.github.io">
+        <img src="https://wertherhu.github.io/images/avatar.png" class="site-logo">
+        <h1 class="site-title">Build_Werther</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://wertherhu.github.io/post/guan-yu/" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="site-description">
+      分享C#、WPF、PowerShell、python相关
+    </div>
+    <div class="site-footer">
+      Powered by Hve Notes
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+
+          <h2 class="archives-title">文章归档</h2>
+          <div class="archives-container">
+            
+              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2021</h2>
+              
+                
+                  <article class="post">
+                    <a href="https://wertherhu.github.io/post/rxnet/">
+                      <h2 class="post-title">
+                        Rx.NET_1 _从观察者模式与事件入手
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wertherhu.github.io/post/wpf-zhi-shi-dian/">
+                      <h2 class="post-title">
+                        WPF知识点
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+            
+              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2020</h2>
+              
+                
+              
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wertherhu.github.io/post/she-zhi-powershell-zhong-duan-de-http-dai-li/">
+                      <h2 class="post-title">
+                        powershell杂七杂八
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wertherhu.github.io/post/plan/">
+                      <h2 class="post-title">
+                        PLAN
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wertherhu.github.io/post/powershell-bian-cheng-shi-fen-zhong-ru-men-gao-ji-pian/">
+                      <h2 class="post-title">
+                        powershell 编程十分钟入门（高级篇）
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+              
+                
+              
+                
+              
+            
+              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2019</h2>
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wertherhu.github.io/post/powershell-ru-men/">
+                      <h2 class="post-title">
+                        powershell 编程十分钟入门（基础篇）
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wertherhu.github.io/post/bo-ke-xiang-mu-tui-jian/">
+                      <h2 class="post-title">
+                        wpf（xaml）博客、项目推荐
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wertherhu.github.io/post/jupyter-lab-shi-yong/">
+                      <h2 class="post-title">
+                        Jupyter Lab 使用
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+            
+          </div>
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
