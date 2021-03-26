@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>WPF中的字体设置 | Build_Werther</title>
+<meta name="description" content="分享C#、WPF、PowerShell、python相关">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="shortcut icon" href="https://wertherhu.github.io/favicon.ico">
+<link rel="stylesheet" href="https://wertherhu.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wertherhu.github.io">
+        <img src="https://wertherhu.github.io/images/avatar.png" class="site-logo">
+        <h1 class="site-title">Build_Werther</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://wertherhu.github.io/post/guan-yu/" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="site-description">
+      分享C#、WPF、PowerShell、python相关
+    </div>
+    <div class="site-footer">
+      Powered by Hve Notes
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">WPF中的字体设置</h2>
+            <div class="post-date">2021-03-26</div>
+            
+            <div class="post-content">
+              <ul>
+<li>
+<h2 id="全局字体设置">全局字体设置</h2>
+<p>在<strong>WPF</strong>中，如果要对全部的显示内容设置默认的字体和字体大小等，可以在<strong>App.xaml</strong>文件中的<strong>Application.Resources</strong>中写入对<strong>TextElement</strong>以及<strong>TextBlock</strong>的设置。比如</p>
+</li>
+</ul>
+<pre><code class="language-xml">&lt;Application.Resources&gt;
+    &lt;Style TargetType=&quot;{x:Type TextElement }&quot;&gt;
+        &lt;Setter Property=&quot;FontFamily&quot; Value=&quot;Comic Sans MS&quot;/&gt;
+        &lt;Setter Property=&quot;FontSize&quot; Value=&quot;30&quot;/&gt;
+    &lt;/Style&gt;
+    &lt;Style TargetType=&quot;{x:Type TextBlock }&quot;&gt;
+        &lt;Setter Property=&quot;FontFamily&quot; Value=&quot;Comic Sans MS&quot;/&gt;
+        &lt;Setter Property=&quot;FontSize&quot; Value=&quot;30&quot;/&gt;
+    &lt;/Style&gt;
+&lt;/Application.Resources&gt;
+</code></pre>
+<p>或者在c#代码中对TextElement.FontFamilyProperty以及TextBlock.FontFamilyProperty进行覆盖设置：</p>
+<pre><code class="language-c#">TextElement.FontFamilyProperty.OverrideMetadata(typeof(TextElement), newFrameworkPropertyMetadata(new FontFamily(&quot;Comic Sans MS&quot;)));
+
+TextBlock.FontFamilyProperty.OverrideMetadata(typeof(TextBlock), new FrameworkPropertyMetadata(newFontFamily(&quot;Comic Sans MS&quot;)));
+</code></pre>
+<ul>
+<li>
+<h2 id="第三方字体引入">第三方字体引入</h2>
+<ol>
+<li>
+<p>作为<strong>Resource</strong>嵌入在程序中</p>
+<p>将字体添加到项目中，并将字体文件设置为“<strong>资源</strong>”（<strong>Resource</strong>），然后在代码中进行使用。<strong>pack uri</strong>后需要带上** #字体名称**。需要注意的是，字体名称需要准确无误，可以对字体文件（.tff）右键预览进行获取。即 <strong>pack uri(包括字体文件名)#字体名称</strong>。</p>
+<pre><code class="language-xml">&lt;TextBlock FontFamily=&quot;pack://application:,,,/WUI;Component/Resources/sarasa-mono-sc.ttf#sarasa mono sc&quot; Text=&quot;hello 中国&quot; FontSize=&quot;15&quot; &gt;&lt;/TextBlock&gt;
+</code></pre>
+<p>当然也可以简写成 <strong>pack uri(不包括字体文件名)#字体名称</strong>。</p>
+<pre><code class="language-xml">&lt;TextBlock FontFamily=&quot;/WUI;Component/Resources/#sarasa mono sc&quot;
+           Text=&quot;hello 中国&quot; FontSize=&quot;15&quot; &gt;&lt;/TextBlock&gt;
+</code></pre>
+</li>
+<li>
+<p>为<strong>FontFamily</strong>设置<strong>key</strong>，以便后续使用</p>
+<pre><code class="language-xml">&lt;FontFamily x:Key=&quot;sarasa1&quot;&gt;/WUI;Component/Resources/#sarasa mono sc&lt;/FontFamily&gt;
+
+&lt;FontFamily x:Key=&quot;sarasa2&quot;&gt;/WUI;Component/Resources/sarasa-mono-sc.ttf#sarasa mono sc&lt;/FontFamily&gt;
+</code></pre>
+</li>
+<li>
+<p>从文件中加载字体</p>
+<p>如果嫌弃将字体文件嵌入dll导致dll文件过大，也可以直接从字体文件中加载。</p>
+<pre><code class="language-c#">FontFamily fontFamily = new FontFamily(@&quot;C:\Projects\MyProj\#sarasa mono sc&quot;);
+
+//or
+
+PrivateFontCollection collection = new PrivateFontCollection();
+collection.AddFontFile(@&quot;C:\Projects\MyProj\sarasa-mono-sc.ttf&quot;);
+FontFamily fontFamily = new FontFamily(&quot;sarasa mono sc&quot;, collection);
+Font font = new Font(fontFamily, height);
+
+</code></pre>
+</li>
+<li>
+<p>IconFont</p>
+<p>图标字体加载跟前文一样，只是显示的时候需设置<strong>Text</strong>的值为unicode值，比如&quot;<strong>&amp;#xe688;</strong>&quot;</p>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="参考">参考</h1>
+<ul>
+<li>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.fontfamily?view=net-5.0">FontFamily Class @docs.microsoft.com </a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/CLeopard/article/details/40590373?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&amp;dist_request_id=1328740.378.16167569614954823&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control">WPF设置全局字体和字体嵌入</a></p>
+</li>
+<li>
+<p><a href="https://lindexi.blog.csdn.net/article/details/79160448?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-12.control&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-12.control">WPF 从文件加载字体</a></p>
+</li>
+<li>
+<p>[<a href="https://stackoverflow.com/questions/24022411/loading-a-font-directly-from-a-file-in-c-sharp">Loading a font directly from a file in C#</a>](https://stackoverflow.com/questions/24022411/loading-a-font-directly-from-a-file-in-c-sharp/24022783#24022783)</p>
+</li>
+<li>
+<p>[<a href="https://www.cnblogs.com/anding/p/4961215.html">WPF自定义控件与样式(1)-矢量字体图标(iconfont)</a>](https://www.cnblogs.com/anding/p/4961215.html)</p>
+</li>
+</ul>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://wertherhu.github.io/post/rxnet/">
+                  <h3 class="post-title">
+                    Rx.NET_1 _从观察者模式与事件入手
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '791f423ff25866386842',
+        clientSecret: '4715227d40d2e9a8d975548e7318a35f935a196d',
+        repo: 'wertherhu.github.io',
+        owner: 'WertherHu',
+        admin: ['WertherHu'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
