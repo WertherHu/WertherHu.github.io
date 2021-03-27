@@ -378,8 +378,8 @@ a {
 }
 .post-item {
   display: flex;
-  padding-bottom: 24px;
-  margin-bottom: 24px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #ced4da;
 }
 .post-item:last-of-type {
@@ -389,20 +389,20 @@ a {
   flex: 1;
 }
 .post-item .left .post-title {
-  font-size: 24px;
+  font-size: 26px;
   transition: all 0.3s;
 }
 .post-item .left .post-title:hover {
   color: #212529;
 }
 .post-item .left .post-date {
-  font-size: 18px;
+  font-size: 16px;
   padding: 24px 0;
   color: #adb5bd;
 }
 .post-item .left .post-abstract {
-  line-height: 24px;
-  font-size: 18px;
+  line-height: 20px;
+  font-size: 16px;
   color: #868e96;
 }
 .post-item .right {
